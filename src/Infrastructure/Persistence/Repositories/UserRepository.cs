@@ -1,7 +1,3 @@
-using Archable.Infrastructure.Persistence.Contexts;
-using Archable.Application.Exceptions;
-using Archable.Application.Interfaces.Persistence.Repositories;
-using Archable.Application.Models.Results;
 using Archable.Domain.Entities.Account;
 
 namespace Archable.Infrastructure.Persistence.Repositories

@@ -1,5 +1,4 @@
 using Archable.Application.Interfaces.Persistence.Repositories;
-using Archable.Application.Models.Results;
 
 namespace Archable.Application.Interfaces.Persistence
 {

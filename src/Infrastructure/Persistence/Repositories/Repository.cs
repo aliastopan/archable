@@ -1,7 +1,5 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using Archable.Application.Interfaces.Persistence.Repositories;
-using Archable.Application.Models.Results;
 
 namespace Archable.Infrastructure.Persistence.Repositories
 {

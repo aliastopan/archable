@@ -1,4 +1,3 @@
-using Archable.Application.Models.Results;
 using Archable.Domain.Entities.Account;
 
 namespace Archable.Application.Interfaces.Persistence.Repositories

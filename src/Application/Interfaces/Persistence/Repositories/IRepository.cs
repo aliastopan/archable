@@ -1,5 +1,4 @@
 using System.Linq.Expressions;
-using Archable.Application.Models.Results;
 
 namespace Archable.Application.Interfaces.Persistence.Repositories
 {
