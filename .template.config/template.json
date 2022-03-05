@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Taufan Augusta (Einharan)",
+    "classifications": [ "Web", "Blazor" ],
+    "identity": "archable",
+    "name": "ASP.NET Core with Clean Architecture",
+    "shortName": "archable",
+    "sourceName": "Archable",
+    "tags": {
+        "language": "C#",
+        "type": "solution"
+    },
+    "preferNameDirectory": true
+  }
