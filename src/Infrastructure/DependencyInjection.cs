@@ -7,6 +7,8 @@ namespace Archable.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddTransient<IUnitOfWorkFactory, UnitOfWorkFactory>();
+
             return services;
         }
     }
