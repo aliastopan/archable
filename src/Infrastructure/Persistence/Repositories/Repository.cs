@@ -14,37 +14,57 @@ namespace Archable.Infrastructure.Persistence.Repositories
 
         public Result<TEntity> Get(Guid id)
         {
-            throw new NotImplementedException();
+            var result = Context.Set<TEntity>().Find(id);
+
+            return result is null
+                ? Result.Fail<TEntity>(ExceptionMessage.ENTITY_NOT_FOUND)
+                : Result.Ok<TEntity>(result!);
         }
 
         public Result<IEnumerable<TEntity>> GetAll()
         {
-            throw new NotImplementedException();
+            var result = Context.Set<TEntity>();
+
+            return result.Count<TEntity>() == 0
+                ? Result.Fail<IEnumerable<TEntity>>(ExceptionMessage.ENTITY_NOT_FOUND)
+                : Result.Ok<IEnumerable<TEntity>>(result as IEnumerable<TEntity>);
         }
 
         public Result<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            throw new NotImplementedException();
+            var result = Context.Set<TEntity>().Where(predicate);
+
+            return result.Count<TEntity>() == 0
+                ? Result.Fail<IEnumerable<TEntity>>(ExceptionMessage.ENTITY_NOT_FOUND)
+                : Result.Ok<IEnumerable<TEntity>>(result as IEnumerable<TEntity>);
         }
 
         public Result Add(TEntity entity)
         {
-            throw new NotImplementedException();
+            Context.Set<TEntity>().Add(entity);
+
+            return Result.Ok();
         }
 
         public Result AddRange(IEnumerable<TEntity> entities)
         {
-            throw new NotImplementedException();
+            Context.Set<TEntity>().AddRange(entities);
+
+            return Result.Ok();
         }
 
         public Result Remove(TEntity entity)
         {
-            throw new NotImplementedException();
+            Context.Set<TEntity>().Remove(entity);
+
+            return Result.Ok();
         }
 
         public Result RemoveRange(IEnumerable<TEntity> entities)
         {
-            throw new NotImplementedException();
+            Context.Set<TEntity>().RemoveRange(entities);
+
+            return Result.Ok();
         }
     }
 }
