@@ -15,7 +15,7 @@ namespace Archable.Infrastructure.Persistence.Repositories
             var result = _context.Users.SingleOrDefault(search => search.Username == username);
 
             return result is null
-                ? Result.Fail<User>(ExceptionMessage.FAIL)
+                ? Result.Fail<User>(ExceptionMessage.USER_NOT_FOUND)
                 : Result.Ok<User>(result!);
         }
     }
