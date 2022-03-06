@@ -13,7 +13,7 @@ namespace Archable.Infrastructure.Persistence.Repositories
             this.Context = context;
         }
 
-        public Result<TEntity> Get(Guid id)
+        public virtual Result<TEntity> Get(Guid id)
         {
             var result = Context.Set<TEntity>().Find(id);
 
@@ -22,7 +22,7 @@ namespace Archable.Infrastructure.Persistence.Repositories
                 : Result.Ok<TEntity>(result!);
         }
 
-        public Result<IEnumerable<TEntity>> GetAll()
+        public virtual Result<IEnumerable<TEntity>> GetAll()
         {
             var result = Context.Set<TEntity>();
 
@@ -31,7 +31,7 @@ namespace Archable.Infrastructure.Persistence.Repositories
                 : Result.Ok<IEnumerable<TEntity>>(result as IEnumerable<TEntity>);
         }
 
-        public Result<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)
+        public virtual Result<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)
         {
             var result = Context.Set<TEntity>().Where(predicate);
 
@@ -40,28 +40,28 @@ namespace Archable.Infrastructure.Persistence.Repositories
                 : Result.Ok<IEnumerable<TEntity>>(result as IEnumerable<TEntity>);
         }
 
-        public Result Add(TEntity entity)
+        public virtual Result Add(TEntity entity)
         {
             Context.Set<TEntity>().Add(entity);
 
             return Result.Ok();
         }
 
-        public Result AddRange(IEnumerable<TEntity> entities)
+        public virtual Result AddRange(IEnumerable<TEntity> entities)
         {
             Context.Set<TEntity>().AddRange(entities);
 
             return Result.Ok();
         }
 
-        public Result Remove(TEntity entity)
+        public virtual Result Remove(TEntity entity)
         {
             Context.Set<TEntity>().Remove(entity);
 
             return Result.Ok();
         }
 
-        public Result RemoveRange(IEnumerable<TEntity> entities)
+        public virtual Result RemoveRange(IEnumerable<TEntity> entities)
         {
             Context.Set<TEntity>().RemoveRange(entities);
 
