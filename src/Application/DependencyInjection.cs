@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Archable.Application.Controllers;
 
 namespace Archable.Application
 {
@@ -6,6 +7,8 @@ namespace Archable.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
+            services.AddTransient<UserController>();
+
             return services;
         }
     }
