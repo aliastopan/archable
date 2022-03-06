@@ -22,9 +22,9 @@ namespace Archable.Application.Models.Results
             return new Result(false, message);
         }
 
-        public static Result<T> Fail<T>(string message)
+        public static Result<TValue> Fail<TValue>(string message)
         {
-            return new Result<T>(default!, false, message);
+            return new Result<TValue>(default!, false, message);
         }
 
         public static Result Ok()
@@ -32,20 +32,20 @@ namespace Archable.Application.Models.Results
             return new Result(true, string.Empty);
         }
 
-        public static Result<T> Ok<T>(T value)
+        public static Result<TValue> Ok<TValue>(TValue value)
         {
-            return new Result<T>(value, true, string.Empty);
+            return new Result<TValue>(value, true, string.Empty);
         }
     }
 
-    public class Result<T> : Result
+    public class Result<TValue> : Result
     {
-        protected internal Result(T value, bool success, string error)
+        protected internal Result(TValue value, bool success, string error)
             : base(success, error)
         {
             this.Value = value;
         }
 
-        public T Value { get; init; }
+        public TValue Value { get; init; }
     }
 }
