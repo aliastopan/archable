@@ -1,3 +1,5 @@
+using Archable.Application.Enums.Account;
+
 #nullable disable
 
 namespace Archable.Application.Models.Account
@@ -6,8 +8,8 @@ namespace Archable.Application.Models.Account
     {
         public Guid Id { get; set; }
         public string Username { get; set; }
-        public string Role { get; set; }
-        public string Flag { get; set; }
+        public int RoleSelect { get; set; }
+        public int FlagSelect { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
         public string Salt => Id.ToString();
@@ -15,8 +17,8 @@ namespace Archable.Application.Models.Account
         public NewUser()
         {
             Id = Guid.NewGuid();
-            Role = "none";
-            Flag = "unverified";
+            RoleSelect = Role.None.Value;
+            FlagSelect = AccountFlag.Unverified.Value;
         }
     }
 }
