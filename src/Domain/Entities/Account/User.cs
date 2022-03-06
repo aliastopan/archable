@@ -2,7 +2,7 @@
 
 namespace Archable.Domain.Entities.Account
 {
-    public class User
+    public class User : Entity
     {
         public Guid Id { get; set; }
         public string Username { get; set; }
