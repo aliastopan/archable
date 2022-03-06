@@ -1,0 +1,68 @@
+@namespace RCL.Components
+
+@using Blazored.FluentValidation
+@using Microsoft.AspNetCore.Components.Forms
+@using Archable.Application.Models.Account
+@using Archable.Application.Enums.Account
+@using Archable.Application.Controllers
+
+@inject UserController UserController
+@inject NavigationManager NavManager
+
+<div class="bg-light form-group shadow p-3 mb-5 bg-white rounded border" style="width: 24rem;">
+
+    <h2 class="mb-3">Sign Up</h2>
+
+    <EditForm Model="@_newUser">
+        <FluentValidationValidator />
+
+        <InputText
+            @bind-Value="_newUser.Username"
+            placeholder="Username"
+            class="form-control mb-2"/>
+            <ValidationMessage For="@(() => _newUser.Username)" />
+
+        <InputText
+            type="password"
+            @bind-Value="_newUser.Password"
+            placeholder="Password"
+            class="form-control mb-2"/>
+            <ValidationMessage For="@(() => _newUser.Password)" />
+
+        <InputText
+            type="password"
+            @bind-Value="_newUser.ConfirmPassword"
+            placeholder="Confirm Password"
+            class="form-control mb-2"/>
+            <ValidationMessage For="@(() => _newUser.ConfirmPassword)" />
+
+        <InputSelect
+            @bind-Value="_newUser.RoleSelect"
+            class="form-control mb-2">
+            @foreach (var role in Role.GetAll<Role>())
+            {
+                <option value="@role.Value">@role.Name</option>
+            }
+        </InputSelect>
+
+        <button
+            type="submit"
+            disabled="@(!context.IsModified() || !context.Validate())"
+            @onclick="@SubmitAsync"
+            class="btn btn-primary form-control mb-2">
+            Submit
+        </button>
+
+    </EditForm>
+</div>
+
+@code{
+
+    private NewUser _newUser = new();
+
+    private async Task SubmitAsync()
+    {
+        await Task.Run(() => UserController.Add(_newUser));
+        NavManager.NavigateTo("/");
+    }
+}
