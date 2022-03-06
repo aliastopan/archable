@@ -1,4 +1,4 @@
-using System.Reflection;
+#nullable disable
 
 namespace Archable.Domain.Entities
 {
@@ -6,20 +6,25 @@ namespace Archable.Domain.Entities
     {
         public object this[string propertyName]
         {
-            get
-            {
-                Type myType = GetType();
-                PropertyInfo myPropInfo = myType.GetProperty(propertyName)!;
-                return myPropInfo.GetValue(this, null)!;
-            }
-            set
-            {
-                Type myType = GetType();
-                PropertyInfo myPropInfo = myType.GetProperty(propertyName)!;
-                myPropInfo.SetValue(this, value, null);
-            }
+            get => GetValue(propertyName);
+            set => SetValue(propertyName, value);
         }
 
         public object Index => this["Id"];
+
+        private object GetValue(string propertyName)
+        {
+            var propertyType = GetType();
+            var propertyInfo = propertyType.GetProperty(propertyName);
+
+            return propertyInfo.GetValue(this, null);
+        }
+
+        private void SetValue(string propertyName, object value)
+        {
+            var propertyType = GetType();
+            var propertyInfo = propertyType.GetProperty(propertyName);
+            propertyInfo.SetValue(this, value, null);
+        }
     }
 }
