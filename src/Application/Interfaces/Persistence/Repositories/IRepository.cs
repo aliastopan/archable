@@ -1,8 +1,9 @@
 using System.Linq.Expressions;
+using Archable.Domain.Entities;
 
 namespace Archable.Application.Interfaces.Persistence.Repositories
 {
-    public interface IRepository<TEntity> where TEntity : class
+    public interface IRepository<TEntity> where TEntity : Entity
     {
         Result<TEntity> Get(Guid id);
         Result<IEnumerable<TEntity>> GetAll();

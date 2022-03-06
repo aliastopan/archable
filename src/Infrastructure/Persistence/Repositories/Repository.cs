@@ -1,9 +1,10 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using Archable.Domain.Entities;
 
 namespace Archable.Infrastructure.Persistence.Repositories
 {
-    internal abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    internal abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
     {
         protected readonly DbContext Context;
 
