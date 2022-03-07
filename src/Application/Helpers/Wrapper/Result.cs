@@ -5,6 +5,12 @@ namespace Archable.Application.Helpers.Wrapper
         public bool Success { get; init; }
         public bool Failure => !Success;
         public Exception? Exception { get; init; }
+        public string Verdict
+        {
+            get => Exception is null
+                ? "OK."
+                : Exception.Message;
+        }
 
         protected Result(bool success, Exception exception)
         {
