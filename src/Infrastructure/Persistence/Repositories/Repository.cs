@@ -16,28 +16,46 @@ namespace Archable.Infrastructure.Persistence.Repositories
         public virtual Result<TEntity> Get(Guid id)
         {
             var result = Context.Set<TEntity>().Find(id);
+            var notFound = result is null;
 
-            return result is null
-                ? Result.Fail<TEntity>(new Exception())
-                : Result.Ok<TEntity>(result!);
+            if(notFound)
+            {
+                return Result.Fail<TEntity>(new Exception());
+            }
+            else
+            {
+                return Result.Ok<TEntity>(result!);
+            }
         }
 
         public virtual Result<IEnumerable<TEntity>> GetAll()
         {
             var result = Context.Set<TEntity>();
+            var notFound = result.Count<TEntity>() == 0;
 
-            return result.Count<TEntity>() == 0
-                ? Result.Fail<IEnumerable<TEntity>>(new Exception())
-                : Result.Ok<IEnumerable<TEntity>>(result as IEnumerable<TEntity>);
+            if(notFound)
+            {
+                return Result.Fail<IEnumerable<TEntity>>(new Exception());
+            }
+            else
+            {
+                return Result.Ok<IEnumerable<TEntity>>(result);
+            }
         }
 
         public virtual Result<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)
         {
             var result = Context.Set<TEntity>().Where(predicate);
+            var notFound = result.Count<TEntity>() == 0;
 
-            return result.Count<TEntity>() == 0
-                ? Result.Fail<IEnumerable<TEntity>>(new Exception())
-                : Result.Ok<IEnumerable<TEntity>>(result as IEnumerable<TEntity>);
+            if(notFound)
+            {
+                return Result.Fail<IEnumerable<TEntity>>(new Exception());
+            }
+            else
+            {
+                return Result.Ok<IEnumerable<TEntity>>(result);
+            }
         }
 
         public virtual Result Add(TEntity entity)

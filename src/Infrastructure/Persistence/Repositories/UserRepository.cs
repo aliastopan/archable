@@ -13,10 +13,16 @@ namespace Archable.Infrastructure.Persistence.Repositories
         public Result<User> LookUp(string username)
         {
             var result = _context.Users.SingleOrDefault(search => search.Username == username);
+            var notFound = result is null;
 
-            return result is null
-                ? Result.Fail<User>(new Exception())
-                : Result.Ok<User>(result!);
+            if(notFound)
+            {
+                return Result.Fail<User>(new Exception());
+            }
+            else
+            {
+                return Result.Ok<User>(result!);
+            }
         }
     }
 }
