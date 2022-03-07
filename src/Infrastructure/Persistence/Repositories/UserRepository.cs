@@ -17,7 +17,7 @@ namespace Archable.Infrastructure.Persistence.Repositories
 
             if(notFound)
             {
-                var message = $"Not Found: {typeof(User).Name} of Username: {username}";
+                var message = $"Not Found: {typeof(User).Name.ToUpper()} of USERNAME '{username}' exception.";
                 var exception = new EntityNotFoundException(message);
 
                 return Result.Fail<User>(exception);
