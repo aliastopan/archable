@@ -1,4 +1,4 @@
-namespace Archable.Application.Models.Wrapper
+namespace Archable.Application.Helpers.Wrapper
 {
     public class Result
     {
