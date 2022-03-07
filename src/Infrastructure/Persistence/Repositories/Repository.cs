@@ -20,7 +20,10 @@ namespace Archable.Infrastructure.Persistence.Repositories
 
             if(notFound)
             {
-                return Result.Fail<TEntity>(new Exception());
+                var message = $"Not Found: {typeof(TEntity).Name} of Id: {id}.";
+                var exception = new EntityNotFoundException(message);
+
+                return Result.Fail<TEntity>(exception);
             }
             else
             {
@@ -35,7 +38,10 @@ namespace Archable.Infrastructure.Persistence.Repositories
 
             if(notFound)
             {
-                return Result.Fail<IEnumerable<TEntity>>(new Exception());
+                var message = $"Not Found: {typeof(TEntity).Name} table is empty.";
+                var exception = new EntityNotFoundException(message);
+
+                return Result.Fail<IEnumerable<TEntity>>(exception);
             }
             else
             {
@@ -50,7 +56,10 @@ namespace Archable.Infrastructure.Persistence.Repositories
 
             if(notFound)
             {
-                return Result.Fail<IEnumerable<TEntity>>(new Exception());
+                var message = $"Not Found: any {typeof(TEntity).Name} of predicate {predicate.Body}.";
+                var exception = new EntityNotFoundException(message);
+
+                return Result.Fail<IEnumerable<TEntity>>(exception);
             }
             else
             {
