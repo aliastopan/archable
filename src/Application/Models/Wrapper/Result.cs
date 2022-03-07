@@ -4,44 +4,44 @@ namespace Archable.Application.Models.Wrapper
     {
         public bool Success { get; init; }
         public bool Failure => !Success;
-        public string? Error { get; init; }
+        public Exception? Exception { get; init; }
 
-        protected Result(bool success, string error)
+        protected Result(bool success, Exception exception)
         {
-            if(!success && error == string.Empty)
+            if(!success && exception is null)
             {
                 throw new InvalidOperationException();
             }
 
             this.Success = success;
-            this.Error = error;
+            this.Exception = exception;
         }
 
-        public static Result Fail(string message)
+        public static Result Fail(Exception exception)
         {
-            return new Result(false, message);
+            return new Result(false, exception);
         }
 
-        public static Result<TValue> Fail<TValue>(string message)
+        public static Result<TValue> Fail<TValue>(Exception exception)
         {
-            return new Result<TValue>(default!, false, message);
+            return new Result<TValue>(default!, false, exception);
         }
 
         public static Result Ok()
         {
-            return new Result(true, string.Empty);
+            return new Result(true, null!);
         }
 
         public static Result<TValue> Ok<TValue>(TValue value)
         {
-            return new Result<TValue>(value, true, string.Empty);
+            return new Result<TValue>(value, true, null!);
         }
     }
 
     public class Result<TValue> : Result
     {
-        protected internal Result(TValue value, bool success, string error)
-            : base(success, error)
+        protected internal Result(TValue value, bool success, Exception exception)
+            : base(success, exception)
         {
             this.Value = value;
         }

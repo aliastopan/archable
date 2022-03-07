@@ -18,7 +18,7 @@ namespace Archable.Infrastructure.Persistence.Repositories
             var result = Context.Set<TEntity>().Find(id);
 
             return result is null
-                ? Result.Fail<TEntity>(ExceptionMessage.ENTITY_NOT_FOUND)
+                ? Result.Fail<TEntity>(new Exception())
                 : Result.Ok<TEntity>(result!);
         }
 
@@ -27,7 +27,7 @@ namespace Archable.Infrastructure.Persistence.Repositories
             var result = Context.Set<TEntity>();
 
             return result.Count<TEntity>() == 0
-                ? Result.Fail<IEnumerable<TEntity>>(ExceptionMessage.ENTITY_NOT_FOUND)
+                ? Result.Fail<IEnumerable<TEntity>>(new Exception())
                 : Result.Ok<IEnumerable<TEntity>>(result as IEnumerable<TEntity>);
         }
 
@@ -36,7 +36,7 @@ namespace Archable.Infrastructure.Persistence.Repositories
             var result = Context.Set<TEntity>().Where(predicate);
 
             return result.Count<TEntity>() == 0
-                ? Result.Fail<IEnumerable<TEntity>>(ExceptionMessage.ENTITY_NOT_FOUND)
+                ? Result.Fail<IEnumerable<TEntity>>(new Exception())
                 : Result.Ok<IEnumerable<TEntity>>(result as IEnumerable<TEntity>);
         }
 
