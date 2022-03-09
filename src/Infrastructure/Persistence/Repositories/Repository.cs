@@ -15,56 +15,77 @@ namespace Archable.Infrastructure.Persistence.Repositories
 
         public virtual Result<TEntity> Get(Guid id)
         {
-            var result = Context.Set<TEntity>().Find(id);
-            var notFound = result is null;
+            var entity = Context.Set<TEntity>().Find(id);
 
-            if(notFound)
+            return entity is null
+                ? NotFound()
+                : Found(entity);
+
+            #region LOCAL FUNCTION
+            Result<TEntity> NotFound()
             {
-                var message = $"Not Found: {typeof(TEntity).Name.ToUpper()} of ID '{id}' exception.";
+                string type = typeof(TEntity).Name.ToUpper();
+                string message = $"Not Found: {type} of ID '{id}' exception.";
                 var exception = new EntityNotFoundException(message);
 
                 return Result.Fail<TEntity>(exception);
             }
-            else
+
+            Result<TEntity> Found(TEntity entity)
             {
-                return Result.Ok<TEntity>(result!);
+                return Result.Ok<TEntity>(entity);
             }
+            #endregion
         }
 
         public virtual Result<IEnumerable<TEntity>> GetAll()
         {
-            var result = Context.Set<TEntity>();
-            var notFound = result.Count<TEntity>() == 0;
+            var entities = Context.Set<TEntity>();
 
-            if(notFound)
+            return entities.Count<TEntity>() == 0
+                ? NotFound()
+                : Found(entities);
+
+            #region LOCAL FUNCTION
+            Result<IEnumerable<TEntity>> NotFound()
             {
-                var message = $"Not Found: {typeof(TEntity).Name.ToUpper()} table is empty exception.";
+                string type = typeof(TEntity).Name.ToUpper();
+                string message = $"Not Found: {type} table is empty exception.";
                 var exception = new EntityNotFoundException(message);
 
                 return Result.Fail<IEnumerable<TEntity>>(exception);
             }
-            else
+
+            Result<IEnumerable<TEntity>> Found(IEnumerable<TEntity> entities)
             {
-                return Result.Ok<IEnumerable<TEntity>>(result);
+                return Result.Ok<IEnumerable<TEntity>>(entities);
             }
+            #endregion
         }
 
         public virtual Result<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            var result = Context.Set<TEntity>().Where(predicate);
-            var notFound = result.Count<TEntity>() == 0;
+            var entities = Context.Set<TEntity>().Where(predicate);
 
-            if(notFound)
+            return entities.Count<TEntity>() == 0
+                ? NotFound()
+                : Found(entities);
+
+            #region LOCAL FUNCTION
+            Result<IEnumerable<TEntity>> NotFound()
             {
-                var message = $"Not Found: any {typeof(TEntity).Name.ToUpper()} of predicate '{predicate.Body}' exception.";
+                string type = typeof(TEntity).Name.ToUpper();
+                string message = $"Not Found: any {type} of predicate '{predicate.Body}' exception.";
                 var exception = new EntityNotFoundException(message);
 
                 return Result.Fail<IEnumerable<TEntity>>(exception);
             }
-            else
+
+            Result<IEnumerable<TEntity>> Found(IEnumerable<TEntity> entities)
             {
-                return Result.Ok<IEnumerable<TEntity>>(result);
+                return Result.Ok<IEnumerable<TEntity>>(entities);
             }
+            #endregion
         }
 
         public virtual Result Add(TEntity entity)

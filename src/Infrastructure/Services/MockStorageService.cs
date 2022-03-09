@@ -15,55 +15,74 @@ namespace Archable.Infrastructure.Services
 
         public Result Stash(object key, object value)
         {
-            var hasKey = _storage.ContainsKey(key);
+            var hasDuplicate = _storage.ContainsKey(key);
 
-            if(hasKey)
+            return hasDuplicate
+                ? Exception()
+                : Stash();
+
+            #region LOCAL FUNCTION
+            Result Stash()
             {
-                var message = $"Duplicate Found: record of KEY: '{key}' already exist exception.";
+                _storage.Add(key, value);
+                return Result.Ok();
+            }
+
+            Result Exception()
+            {
+                string message = $"Duplicate Found: record of KEY: '{key}' already exist exception.";
                 var exception = new Exception(message);
 
                 return Result.Fail(exception);
             }
-            else
-            {
-                _storage.Add(key, value);
-
-                return Result.Ok();
-            }
+            #endregion
         }
 
         public Result Delete(object key)
         {
-            var hasKey = _storage.ContainsKey(key);
+            var keyFound = _storage.ContainsKey(key);
 
-            if(!hasKey)
-            {
-                var message = $"Not Found: record of KEY: '{key}' exception.";
-                var exception = new Exception(message);
+            return !keyFound
+                ? Exception()
+                : Delete();
 
-                return Result.Fail(exception);
-            }
-            else
+            #region LOCAL FUNCTION
+            Result Delete()
             {
+                _storage.Remove(key);
                 return Result.Ok();
             }
+
+            Result Exception()
+            {
+                return Result.Fail(
+                    new Exception($"Not Found: record of KEY: '{key}' exception.")
+                );
+            }
+            #endregion
         }
 
         public Result<object> Fetch(object key)
         {
-            var hasKey = _storage.ContainsKey(key);
+            var keyFound = _storage.ContainsKey(key);
 
-            if(!hasKey)
-            {
-                var message = $"Not Found: record of KEY: '{key}' exception.";
-                var exception = new Exception(message);
+            return !keyFound
+                ? Exception()
+                : Fetch();
 
-                return Result.Fail<object>(exception);
-            }
-            else
+            #region LOCAL FUNCTION
+            Result<object> Fetch()
             {
                 return Result.Ok<object>(_storage[key]!);
             }
+
+            Result<object> Exception()
+            {
+                return Result.Fail<object>(
+                    new Exception($"Not Found: record of KEY: '{key}' exception.")
+                );
+            }
+            #endregion
         }
     }
 }

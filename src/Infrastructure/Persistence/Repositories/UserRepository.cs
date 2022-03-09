@@ -12,20 +12,26 @@ namespace Archable.Infrastructure.Persistence.Repositories
 
         public Result<User> LookUp(string username)
         {
-            var result = _context.Users.SingleOrDefault(search => search.Username == username);
-            var notFound = result is null;
+            var user = _context.Users.SingleOrDefault(search => search.Username == username);
 
-            if(notFound)
+            return user is null
+                ? NotFound()
+                : Found(user);
+
+            #region LOCAL FUNCTION
+            Result<User> NotFound()
             {
-                var message = $"Not Found: {typeof(User).Name.ToUpper()} of USERNAME '{username}' exception.";
+                string message = $"Not Found: USER of USERNAME '{username}' exception.";
                 var exception = new EntityNotFoundException(message);
 
                 return Result.Fail<User>(exception);
             }
-            else
+
+            Result<User> Found(User user)
             {
-                return Result.Ok<User>(result!);
+                return Result.Ok<User>(user);
             }
+            #endregion
         }
     }
 }
